@@ -3,23 +3,19 @@ import { useData } from '../context/DataContext'
 import SnackTable from './SnackTable';
 
 const Home = () => {
-   const {snacks,   searchSnack,searchValue,
-     setSearchValue,
-     sortedSnacks } = useData();
-   
-   
+  const { setSearchValue,sortedSnacks } = useData();
 
   return (
     <div>
 
       <h1>Snack Table</h1>
       <div>
-        <input 
-        onChange={(e)=> setSearchValue(e.target.value)}
-        type="search" 
-        placeholder="Search with Products or ingredients"
+        <input
+          onChange={(e) => setSearchValue(e.target.value)}
+          type="search"
+          placeholder="Search with Products or ingredients"
         />
-        <SnackTable  snacks={sortedSnacks}/>
+        <SnackTable snacks={sortedSnacks} />
       </div>
     </div>
   )
