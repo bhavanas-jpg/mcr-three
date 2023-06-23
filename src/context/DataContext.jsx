@@ -1,22 +1,57 @@
-import React, { createContext, useContext, useReducer } from 'react'
+import React, { createContext, useContext, useReducer, useState } from 'react'
 import DataReducer from '../reducer/DataReducer';
+import {snacks} from "../data/tableData"
 
 export const DataContext = createContext(null);
 
 const DataProvider = ({ children }) => {
+    const [searchValue, setSearchValue] = useState("");
+    const [sortColumn, setSortColumn] = useState(null);
+    const [sortDirection, setSortDirection] = useState('asc');
 
-    const {initialState, dataReducer} = DataReducer();
-    const [state,dispatch]= useReducer(dataReducer, initialState)
-    const name = "Bhavana";
+    let searchSnack ;
 
+
+
+    searchSnack = 
+    searchValue.length > 0? 
+    snacks.filter(snack => snack.product_name.toLowerCase().includes(searchValue.toLowerCase()) ||
+    snack.ingredients.join(', ').toLowerCase().includes(searchValue.toLowerCase())
+    ): snacks;
+
+    const handleHeaderClick = (column) => {
+        console.log(column);
+        if (column === sortColumn) {
+          setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+          setSortColumn(column);
+          setSortDirection('asc');
+        }
+      };
+    
+      const sortedSnacks = [...searchSnack].sort((a, b) => {
+        if (sortColumn) {
+          const aValue = a[sortColumn];
+          const bValue = b[sortColumn];
+    
+          if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+          if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+
+  
 
 
 
     return (
         <DataContext.Provider value={{ 
-            state,
-            dispatch,
-            name }}>
+            snacks,
+            searchSnack ,
+            searchValue, setSearchValue,
+            handleHeaderClick,
+            sortedSnacks
+           }}>
             {children}
         </DataContext.Provider>
     )

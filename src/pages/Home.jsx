@@ -1,12 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useData } from '../context/DataContext'
+import SnackTable from './SnackTable';
 
 const Home = () => {
-    const {name, state}= useData();
-    console.log(name);
-    console.log(state);
+   const {snacks,   searchSnack,searchValue,
+     setSearchValue,
+     sortedSnacks } = useData();
+   
+   
+
   return (
-    <div>Home</div>
+    <div>
+
+      <h1>Snack Table</h1>
+      <div>
+        <input 
+        onChange={(e)=> setSearchValue(e.target.value)}
+        type="search" 
+        placeholder="Search with Products or ingredients"
+        />
+        <SnackTable  snacks={sortedSnacks}/>
+      </div>
+    </div>
   )
 }
 
