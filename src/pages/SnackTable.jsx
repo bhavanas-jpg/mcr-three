@@ -3,9 +3,6 @@ import { useData } from '../context/DataContext';
 
 const SnackTable = ({snacks}) => {
     const {handleHeaderClick} = useData();
-    console.log(handleHeaderClick);
-
-    console.log(snacks);
  
   return (
     <div>

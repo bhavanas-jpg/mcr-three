@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useState } from 'react'
-import DataReducer from '../reducer/DataReducer';
+
 import {snacks} from "../data/tableData"
 
 export const DataContext = createContext(null);
@@ -11,8 +11,6 @@ const DataProvider = ({ children }) => {
 
     let searchSnack ;
 
-
-
     searchSnack = 
     searchValue.length > 0? 
     snacks.filter(snack => snack.product_name.toLowerCase().includes(searchValue.toLowerCase()) ||
@@ -20,7 +18,7 @@ const DataProvider = ({ children }) => {
     ): snacks;
 
     const handleHeaderClick = (column) => {
-        console.log(column);
+       
         if (column === sortColumn) {
           setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
         } else {
